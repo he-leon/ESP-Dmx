@@ -36,7 +36,7 @@ int chanSize;
 void DMXESPSerial::init() {
   chanSize = defaultMax;
 
-  Serial1.begin(DMXSPEED);
+  Serial2.begin(DMXSPEED);
   pinMode(sendPin, OUTPUT);
   dmxStarted = true;
 }
@@ -50,7 +50,7 @@ void DMXESPSerial::init(int chanQuant) {
 
   chanSize = chanQuant;
 
-  Serial1.begin(DMXSPEED);
+  Serial2.begin(DMXSPEED);
   pinMode(sendPin, OUTPUT);
   dmxStarted = true;
 }
@@ -79,7 +79,7 @@ void DMXESPSerial::write(int Channel, uint8_t value) {
 void DMXESPSerial::end() {
   delete dmxData;
   chanSize = 0;
-  Serial1.end();
+  Serial2.end();
   dmxStarted == false;
 }
 
@@ -88,19 +88,17 @@ void DMXESPSerial::update() {
 
   //Send break
   digitalWrite(sendPin, HIGH);
-  Serial1.begin(BREAKSPEED, BREAKFORMAT);
-  Serial1.write(0);
-  Serial1.flush();
+  Serial2.begin(BREAKSPEED, BREAKFORMAT);
+  Serial2.write(0);
+  Serial2.flush();
   delay(1);
-  Serial1.end();
+  Serial2.end();
 
   //send data
-  Serial1.begin(DMXSPEED, DMXFORMAT);
+  Serial2.begin(DMXSPEED, DMXFORMAT);
   digitalWrite(sendPin, LOW);
-  Serial1.write(dmxData, chanSize);
-  Serial1.flush();
+  Serial2.write(dmxData, chanSize);
+  Serial2.flush();
   delay(1);
-  Serial1.end();
+  Serial2.end();
 }
-
-// Function to update the DMX bus
