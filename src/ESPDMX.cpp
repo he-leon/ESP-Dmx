@@ -88,17 +88,20 @@ void DMXESPSerial::update() {
 
   //Send break
   digitalWrite(sendPin, HIGH);
-  Serial2.begin(BREAKSPEED, BREAKFORMAT);
+  //Serial2.begin(BREAKSPEED, BREAKFORMAT);
+  Serial2.updateBaudRate(BREAKSPEED)
   Serial2.write(0);
   Serial2.flush();
   delay(1);
   Serial2.end();
 
   //send data
-  Serial2.begin(DMXSPEED, DMXFORMAT);
+
+  //Serial2.begin(DMXSPEED, DMXFORMAT);
+  Serial2.updateBaudRate(DMXSPEED)
   digitalWrite(sendPin, LOW);
   Serial2.write(dmxData, chanSize);
   Serial2.flush();
   delay(1);
-  Serial2.end();
+  //Serial2.end();
 }
