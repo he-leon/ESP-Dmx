@@ -93,7 +93,7 @@ void DMXESPSerial::update() {
   Serial2.write(0);
   Serial2.flush();
   delay(1);
-  Serial2.end();
+  //Serial2.end();
 
   //send data
 
